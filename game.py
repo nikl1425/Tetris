@@ -5,9 +5,10 @@ class Game:
     def __init__(self, screen, width, height):
         self.state = "playing"
         self.screen = screen
+        self.running = False
         self.width = width
         self.height = height
-  #      self.background = pygame.draw.rect(screen, "black", (0, 0, self.width, self.height))
+        self.background = pygame.draw.rect(screen, "black", (0, 0, self.width, self.height))
 
     def event_handler(self, event):
         pass

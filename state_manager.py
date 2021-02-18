@@ -4,14 +4,12 @@ from intro import intro
 
 
 class State_Manager:
-
     def __init__(self, display):
         self.state = []
         self.run = True
-        self.intro_state = intro(display, 600, 400)
-        self.game_state = Game(display, 600, 400)
+        self.intro_state = intro(display, 640, 400)
+        self.game_state = Game(display, 640, 400)
 
-    print()
 
 
     def change_state(self, state):
@@ -19,9 +17,8 @@ class State_Manager:
         self.state.insert(state)
 
     def running_states(self):
-        print(self.intro_state.state)
-        print(self.game_state.state)
+        self.intro_state.main()
 
 
-state_m = State_Manager(display="bla")
-state_m.running_states()
+
+

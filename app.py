@@ -1,12 +1,12 @@
 import pygame
+from state_manager import State_Manager
 
 
 class App:
     def __init__(self):
         self._running = True
         self._display_surf = None
-        self.size = self.weight, self.height = 640, 400
-
+        self.size = self.width, self.height = 640, 400
 
     def on_init(self):
         pygame.init()
@@ -23,8 +23,7 @@ class App:
         pass
 
     def on_render(self):
-        pygame.draw.rect(self._display_surf, "black", (0, 0, self.weight, self.height))
-        pygame.display.flip()
+        pass
 
     def on_cleanup(self):
         pygame.quit()
@@ -34,10 +33,8 @@ class App:
             self._running = False
 
         while (self._running):
-            for event in pygame.event.get():
-                self.on_event(event)
-            self.on_loop()
-            self.on_render()
+            state_manager = State_Manager(self._display_surf)
+            state_manager.running_states()
         self.on_cleanup()
 
 

@@ -41,7 +41,6 @@ class App:
         self.on_cleanup()
 
 
-
 if __name__ == "__main__":
     theApp = App()
     theApp.on_execute()

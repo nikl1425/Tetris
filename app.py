@@ -18,7 +18,6 @@ class App:
 
         self._running = True
 
-
     def state_manager(self):
         if self.intro_state.state == "intro":
             self.intro_state.main()

@@ -1,5 +1,5 @@
 import pygame
-
+from button import Button
 
 
 class intro:
@@ -10,27 +10,26 @@ class intro:
         self.width = width
         self.height = height
         self.background = pygame.image.load("assets/intro_background.png")
+        self.start_game = Button(200, 200, 50, 20, "red", "blue")
 
     def event_handler(self, event):
-        if event.type == pygame.MOUSEBUTTONDOWN:
-            self.state = "playing"
         if event.type == pygame.KEYDOWN:
             if event.key == pygame.K_ESCAPE:
                 pygame.quit()
 
     def render(self):
         self.background = pygame.transform.scale(self.background, (self.width, self.height))
-        self.screen.blit(self.background, (0,0))
+        self.screen.blit(self.background, (0, 0))
+        self.start_game.draw(self.screen)
         pygame.display.flip()
 
-    def update(self):
-        pass
+    def change_state(self):
+        print("hi")
+
+
 
     def main(self):
         for event in pygame.event.get():
             self.event_handler(event)
 
-
-
-        self.update()
         self.render()

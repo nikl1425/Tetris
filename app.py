@@ -10,26 +10,20 @@ class App:
         self._running = True
         self.size = self.width, self.height = 640, 400
         self._display_surf = pygame.display.set_mode(self.size)
-        self.intro_state = intro(self._display_surf, 640, 400)
-        self.game_state = Game(self._display_surf, 640, 400)
+        self.intro_state = intro(self._display_surf, self.width, self.height)
+        self.game_state = Game(self._display_surf, self.width, self.height)
 
     def on_init(self):
         pygame.init()
 
         self._running = True
 
-    def on_event(self, event):
-        if event.type == pygame.QUIT:
-            self._running = False
-        if event.type == pygame.K_ESCAPE:
-            self._running = False
 
     def state_manager(self):
         if self.intro_state.state == "intro":
             self.intro_state.main()
         if self.intro_state.state == "playing":
             self.game_state.main()
-
 
     def on_cleanup(self):
         pygame.quit()

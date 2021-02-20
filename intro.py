@@ -9,14 +9,18 @@ class intro:
         self.running = True
         self.width = width
         self.height = height
-        self.background = pygame.draw.rect(screen, "black", (0, 0, self.width, self.height))
+        self.background = pygame.image.load("assets/intro_background.png")
 
     def event_handler(self, event):
-        pass
+        if event.type == pygame.MOUSEBUTTONDOWN:
+            self.state = "playing"
+        if event.type == pygame.KEYDOWN:
+            if event.key == pygame.K_ESCAPE:
+                pygame.quit()
 
     def render(self):
-        print(self.state)
-        pygame.draw.rect(self.screen, "black", (0, 0, self.width, self.height))
+        self.background = pygame.transform.scale(self.background, (self.width, self.height))
+        self.screen.blit(self.background, (0,0))
         pygame.display.flip()
 
     def update(self):
@@ -25,7 +29,8 @@ class intro:
     def main(self):
         for event in pygame.event.get():
             self.event_handler(event)
-            if event.type == pygame.MOUSEBUTTONDOWN:
-                self.state = "playing"
+
+
+
         self.update()
         self.render()

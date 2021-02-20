@@ -18,5 +18,15 @@ class Button:
             pygame.draw.rect(window, self.hover_color, self.size)
 
 
+    def check_hover(self):
+        mouse_PosX, mouse_PosY = pygame.mouse.get_pos()
+        if self.x < mouse_PosX < (self.x + self.width):
+            if self.y < mouse_PosY < (self.y + self.height):
+                return True
+        return False
+
+
+
+
 
 

@@ -1,16 +1,21 @@
 import pygame
-from state_manager import State_Manager
+from intro import intro
+from game import Game
 
 
 class App:
+
+
     def __init__(self):
         self._running = True
-        self._display_surf = None
         self.size = self.width, self.height = 640, 400
+        self._display_surf = pygame.display.set_mode(self.size)
+        self.intro_state = intro(self._display_surf, 640, 400)
+        self.game_state = Game(self._display_surf, 640, 400)
 
     def on_init(self):
         pygame.init()
-        self._display_surf = pygame.display.set_mode(self.size)
+
         self._running = True
 
     def on_event(self, event):
@@ -19,11 +24,12 @@ class App:
         if event.type == pygame.K_ESCAPE:
             self._running = False
 
-    def on_loop(self):
-        pass
+    def state_manager(self):
+        if self.intro_state.state == "intro":
+            self.intro_state.main()
+        if self.intro_state.state == "playing":
+            self.game_state.main()
 
-    def on_render(self):
-        pass
 
     def on_cleanup(self):
         pygame.quit()
@@ -33,8 +39,8 @@ class App:
             self._running = False
 
         while (self._running):
-            state_manager = State_Manager(self._display_surf)
-            state_manager.running_states()
+            self.state_manager()
+
         self.on_cleanup()
 
 

@@ -1,6 +1,7 @@
 import pygame
 
 
+
 class intro:
     def __init__(self, screen, width, height):
         self.state = "intro"
@@ -14,6 +15,7 @@ class intro:
         pass
 
     def render(self):
+        print(self.state)
         pygame.draw.rect(self.screen, "black", (0, 0, self.width, self.height))
         pygame.display.flip()
 
@@ -23,5 +25,7 @@ class intro:
     def main(self):
         for event in pygame.event.get():
             self.event_handler(event)
+            if event.type == pygame.MOUSEBUTTONDOWN:
+                self.state = "playing"
         self.update()
         self.render()

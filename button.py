@@ -2,7 +2,7 @@ import pygame
 
 
 class Button:
-    pygame.init()
+    pygame.font.init()
     font = pygame.font.SysFont('arial', 25)
     black = (0, 0, 0)
 

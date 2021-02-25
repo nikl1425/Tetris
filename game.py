@@ -31,7 +31,6 @@ class Game:
         self.screen.blit(self.background, (0, 0))
         pygame.draw.rect(self.screen, "black", self.game_window)
 
-
         for y in range(grid_height):
             for x in range(grid_width):
                 grid_start = x + gameWidth // 3

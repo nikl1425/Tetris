@@ -16,7 +16,6 @@ class Button:
         self.hover_color = hover_color
         self.text = text
 
-
     def draw(self, window):
         mouse_PosX, mouse_PosY = pygame.mouse.get_pos()
         pygame.draw.rect(window, self.color, self.size)

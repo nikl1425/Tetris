@@ -1,0 +1,8 @@
+   for i in coordinates:
+            count = len(i)
+            if len(i) > 1:
+                B, C = split_list(i)
+                coordinates.remove(i)
+                coordinates.append(B)
+                coordinates.append(C)
+                print(coordinates)

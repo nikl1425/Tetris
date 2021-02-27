@@ -47,6 +47,8 @@ class Game:
             self.grid.append(column)
         print(self.grid, end=' ')
 
+
+
     def main(self):
         for event in pygame.event.get():
             self.event_handler(event)

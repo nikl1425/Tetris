@@ -22,24 +22,26 @@ class Block:
         self.x = []
         self.y = []
 
-    def convert_block(self):
-        coordinates = []
-        coordinates_dic = {}
-        data_dict = defaultdict(list)
-        for char in self.L:
-            result = findOccurrences(char, '#')
-            coordinates.append(result)
-            print(coordinates)
 
-        for index, element in enumerate(coordinates):
-            if len(element) > 1:
-                B, C = split_list(element)
-                data_dict[index].append({index : B})
-                data_dict[index].append({index : C})
-            else:
-                data_dict[index].append(index )
 
-        print(data_dict.items())
+
+    def convert_shape_format(self):
+        positions = []
+        format = self.L
+
+        for i, line in enumerate(format):
+            row = list(line)
+            for j, column in enumerate(row):
+                if column == '#':
+                    positions.append((j, i))
+
+        return positions
+
+
+
+
+
+
 
 
 
@@ -47,5 +49,5 @@ class Block:
 
 blob = Block(29)
 
-print(blob.convert_block())
+blob.convert_shape_format()
 

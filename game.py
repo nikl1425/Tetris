@@ -36,6 +36,15 @@ class Game:
                 grid_start = x + gameWidth // 3
                 rect = pygame.Rect((x*self.blocks.size) + grid_start, y*self.blocks.size, self.blocks.size, self.blocks.size)
                 pygame.draw.rect(self.screen, (200, 200, 200,), rect, 1)
+            drawBlocks = self.blocks.convert_shape_format()
+
+            for element in drawBlocks:
+                grid_start = element[0] + gameWidth // 3
+                pygame.draw.rect(self.screen, (150, 200, 10),
+                                ((element[0]*self.blocks.size) + grid_start,
+                                element[1]*self.blocks.size,
+                                self.blocks.size,
+                                self.blocks.size), 1)
 
         pygame.display.flip()
 
@@ -45,7 +54,7 @@ class Game:
             for r in range(grid_height):
                 column.append(self.blocks.color)
             self.grid.append(column)
-        print(self.grid, end=' ')
+        #print(self.grid, end=' ')
 
 
 

@@ -7,6 +7,10 @@ gameWidth = 400
 gameHeight = 400
 grid_width = 10
 grid_height = 20
+tetro = Block(20)
+current_tetro = tetro.convert_shape_format()
+clock = pygame.time.Clock()
+
 
 class Game:
 
@@ -21,30 +25,38 @@ class Game:
         self.grid = []
         self.blocks = Block(20)
 
+
     def event_handler(self, event):
         if event.type == pygame.KEYDOWN:
             if event.key == pygame.K_ESCAPE:
                 pygame.quit()
+            if event.key == pygame.K_s:
+                print("clicked")
+                for element in current_tetro:
+                    element[1] += 1
+
+
 
     def render(self):
         self.background = pygame.transform.scale(self.background, (self.width, self.height))
         self.screen.blit(self.background, (0, 0))
         pygame.draw.rect(self.screen, "black", self.game_window)
 
+
         for y in range(grid_height):
             for x in range(grid_width):
                 grid_start = x + gameWidth // 3
                 rect = pygame.Rect((x*self.blocks.size) + grid_start, y*self.blocks.size, self.blocks.size, self.blocks.size)
                 pygame.draw.rect(self.screen, (200, 200, 200,), rect, 1)
-            drawBlocks = self.blocks.convert_shape_format()
 
-            for element in drawBlocks:
+
+            for element in current_tetro:
                 grid_start = element[0] + gameWidth // 3
                 pygame.draw.rect(self.screen, (150, 200, 10),
                                 ((element[0]*self.blocks.size) + grid_start,
                                 element[1]*self.blocks.size,
                                 self.blocks.size,
-                                self.blocks.size), 1)
+                                self.blocks.size))
 
         pygame.display.flip()
 
@@ -54,11 +66,15 @@ class Game:
             for r in range(grid_height):
                 column.append(self.blocks.color)
             self.grid.append(column)
+
+        for element in current_tetro:
+            element[1] += 1
         #print(self.grid, end=' ')
 
 
 
     def main(self):
+        clock.tick(1)
         for event in pygame.event.get():
             self.event_handler(event)
 

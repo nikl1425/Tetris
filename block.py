@@ -33,7 +33,8 @@ class Block:
             row = list(line)
             for j, column in enumerate(row):
                 if column == '#':
-                    positions.append((j, i))
+                    positions.append(list((j, i)))
+                    print(positions)
 
         return positions
 

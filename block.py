@@ -1,5 +1,6 @@
 import pygame
 from collections import defaultdict
+from random import randrange
 
 
 def findOccurrences(s, ch):
@@ -45,27 +46,36 @@ class Block:
     shape_colors = [red, blue, green, pink, yellow]
 
     def __init__(self, size):
-        self.size = size
-        self.color = (0, 0, 0)
+        self.size = size # make this as tuple
+        self.color = self.black
         self.rotation = 0
         self.x = []
         self.y = []
 
-
-
-
-    def convert_shape_format(self):
+    def convert_shape_format(self, form):
         positions = []
-        format = self.I
 
-        for i, line in enumerate(format):
+        for i, line in enumerate(form):
             row = list(line)
             for j, column in enumerate(row):
                 if column == '#':
                     positions.append(list((j, i)))
-                    print(positions)
+                    #print(positions)
 
         return positions
+
+    def next_block(self):
+        random_int = randrange(0, 5)
+        picked_shape = self.shapes[random_int]
+        index = self.shapes.index(picked_shape)
+        picked_color = self.shape_colors[index]
+        return picked_color, picked_shape
+
+    def create_block(self):
+        block_color, current_block = self.next_block()
+        current_block = self.convert_shape_format(current_block)
+
+        return current_block, block_color
 
 
 
@@ -79,5 +89,5 @@ class Block:
 
 blob = Block(29)
 
-blob.convert_shape_format()
+blob.create_block()
 

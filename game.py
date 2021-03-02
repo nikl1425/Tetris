@@ -27,6 +27,7 @@ class Game:
         self.background = pygame.image.load("assets/game_background.png")
         self.grid = []
         self.tetro_list = []
+        self.locked_positions = []
         self.blocks = Block(20)
         self.current_tetro, self.current_tetro_color = tetro.create_block()
 
@@ -47,6 +48,10 @@ class Game:
 
         for j in self.tetro_list:
             pygame.draw.rect(self.screen, self.current_tetro_color, j)
+
+        for l in self.locked_positions:
+            for p in l:
+                pygame.draw.rect(self.screen, self.current_tetro_color, p)
 
 
 
@@ -71,14 +76,21 @@ class Game:
 
     def tetro_movement(self):
         for element in self.current_tetro:
-            element[1] += 1
-
+            if element[1] >= 19:
+                element[1] += 0
+                self.locked_positions.append(self.tetro_list)
+            else:
+                element[1] += 1
 
     def update(self):
         global next_tetro
         self.create_grid()
         self.tetro_movement()
         self.create_tetros()
+        #print('tetrolist ' + str(self.tetro_list))
+        #print(self.current_tetro)
+        print(self.locked_positions)
+        #print('gridlist ' + str(self.grid))
 
 
     def main(self):

@@ -49,9 +49,10 @@ class Game:
         for j in self.tetro_list:
             pygame.draw.rect(self.screen, self.current_tetro_color, j)
 
-        for l in self.locked_positions:
-            for p in l:
-                pygame.draw.rect(self.screen, self.current_tetro_color, p)
+        for element in self.locked_positions:
+            rect_list, color = element
+            for rect in rect_list:
+                pygame.draw.rect(self.screen, color, rect)
 
 
 
@@ -78,7 +79,9 @@ class Game:
         for element in self.current_tetro:
             if element[1] >= 19:
                 element[1] += 0
-                self.locked_positions.append(self.tetro_list)
+                this_set = (self.tetro_list, self.current_tetro_color)
+                self.locked_positions.append(this_set)
+                self.current_tetro, self.current_tetro_color = tetro.create_block()
             else:
                 element[1] += 1
 

@@ -6,3 +6,13 @@
                 coordinates.append(B)
                 coordinates.append(C)
                 print(coordinates)
+
+        for element in self.current_tetro:
+                    try:
+                        grid_start = element[0] + gameWidth // 3
+                        pygame.draw.rect(self.screen, self.current_tetro_color,
+                                        ((element[0]*self.blocks.size) + grid_start,
+                                        element[1]*self.blocks.size,
+                                        self.blocks.size,
+                                        self.blocks.size))
+                    except: print("PENDING NEW TETRO")

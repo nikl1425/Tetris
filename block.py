@@ -49,8 +49,7 @@ class Block:
         self.size = size # make this as tuple
         self.color = self.black
         self.rotation = 0
-        self.x = []
-        self.y = []
+
 
     def convert_shape_format(self, form):
         positions = []
@@ -74,14 +73,9 @@ class Block:
     def create_block(self):
         block_color, current_block = self.next_block()
         current_block = self.convert_shape_format(current_block)
+        print(current_block)
 
         return current_block, block_color
-
-
-
-
-
-
 
 
 

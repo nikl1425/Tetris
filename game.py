@@ -28,6 +28,7 @@ class Game:
         self.grid = []
         self.tetro_list = []
         self.locked_positions = []
+        self.locked_rect = []
         self.blocks = Block(20)
         self.current_tetro, self.current_tetro_color = tetro.create_block()
 
@@ -35,8 +36,17 @@ class Game:
         if event.type == pygame.KEYDOWN:
             if event.key == pygame.K_ESCAPE:
                 pygame.quit()
-            if event.key == pygame.K_s:
-                print("clicked")
+            if event.key == pygame.K_d:
+                for element in self.current_tetro:
+                    element[0] += 1
+            if event.key == pygame.K_a:
+                for element in self.current_tetro:
+                    element[0] -= 1
+                    element[1] += 0
+            if event.key == pygame.K_SPACE:
+                for element in self.current_tetro:
+                    element[1] += 15
+
 
     def render(self):
         self.background = pygame.transform.scale(self.background, (self.width, self.height))
@@ -84,6 +94,18 @@ class Game:
                 self.current_tetro, self.current_tetro_color = tetro.create_block()
             else:
                 element[1] += 1
+        locked_rects = []
+        locked = [rect for rect, color in self.locked_positions]
+        print("locked:   " +  str(locked))
+        for i in locked:
+            for rect in i:
+                self.locked_rect.append(rect)
+        for random_rect in self.tetro_list:
+            if pygame.Rect.collidelist(random_rect, self.locked_rect):
+                print("what up")
+
+
+
 
     def update(self):
         global next_tetro
@@ -92,8 +114,10 @@ class Game:
         self.create_tetros()
         #print('tetrolist ' + str(self.tetro_list))
         #print(self.current_tetro)
-        print(self.locked_positions)
+        #print(self.locked_positions)
         #print('gridlist ' + str(self.grid))
+        print("locked rect:   " + str(self.locked_rect))
+
 
 
     def main(self):

@@ -16,3 +16,12 @@
                                         self.blocks.size,
                                         self.blocks.size))
                     except: print("PENDING NEW TETRO")
+
+
+        try:
+            for element in self.locked_tetro:
+                rect, color = element
+                for i in rect:
+                    print("rect = " + str(i) + " color = " + str(color))
+        except:
+            print("not filled yet")

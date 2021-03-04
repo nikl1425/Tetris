@@ -1,5 +1,7 @@
 import pygame
 from block import Block
+import time
+from collections import deque
 
 gameX = 100
 gameY = 0
@@ -27,8 +29,8 @@ class Game:
         self.background = pygame.image.load("assets/game_background.png")
         self.grid = []
         self.tetro_list = []
-        self.locked_positions = []
-        self.locked_rect = []
+        self.locked_positions = deque([])
+        self.locked_tetro = []
         self.blocks = Block(20)
         self.current_tetro, self.current_tetro_color = tetro.create_block()
 
@@ -60,13 +62,7 @@ class Game:
             pygame.draw.rect(self.screen, self.current_tetro_color, j)
 
         for element in self.locked_positions:
-            rect_list, color = element
-            for rect in rect_list:
-                pygame.draw.rect(self.screen, color, rect)
-
-
-
-
+            pygame.draw.rect(self.screen, self)
 
         pygame.display.flip()
 
@@ -85,24 +81,37 @@ class Game:
                               self.blocks.size)
             self.tetro_list.append(rect)
 
+    def create_locked_tetros(self):
+        for element in self.locked_tetro:
+            rect = pygame.Rect(element[0] * self.blocks.size + grid_start,
+                              element[1] * self.blocks.size,
+                              self.blocks.size,
+                              self.blocks.size)
+            self.locked_positions.append(rect)
+
+
     def tetro_movement(self):
+        hit_bottom = False
         for element in self.current_tetro:
             if element[1] >= 19:
-                element[1] += 0
-                this_set = (self.tetro_list, self.current_tetro_color)
-                self.locked_positions.append(this_set)
-                self.current_tetro, self.current_tetro_color = tetro.create_block()
+                hit_bottom = True
             else:
                 element[1] += 1
-        locked_rects = []
-        locked = [rect for rect, color in self.locked_positions]
-        print("locked:   " +  str(locked))
-        for i in locked:
-            for rect in i:
-                self.locked_rect.append(rect)
-        for random_rect in self.tetro_list:
-            if pygame.Rect.collidelist(random_rect, self.locked_rect):
-                print("what up")
+
+        if hit_bottom:
+            locked_tetro_set = (self.current_tetro, self.current_tetro_color)
+            self.locked_tetro.extend(locked_tetro_set)
+            self.current_tetro, self.current_tetro_color = tetro.create_block()
+
+
+
+        print("current tetro: " + str(self.current_tetro))
+        print("locked" + str(self.locked_tetro))
+
+
+
+
+
 
 
 
@@ -116,12 +125,12 @@ class Game:
         #print(self.current_tetro)
         #print(self.locked_positions)
         #print('gridlist ' + str(self.grid))
-        print("locked rect:   " + str(self.locked_rect))
+       #print("locked rect:   " + str(self.locked_rect))
 
 
 
     def main(self):
-        clock.tick(1)
+        clock.tick(2)
         for event in pygame.event.get():
             self.event_handler(event)
 

@@ -73,7 +73,7 @@ class Block:
     def create_block(self):
         block_color, current_block = self.next_block()
         current_block = self.convert_shape_format(current_block)
-        print(current_block)
+        #print(current_block)
 
         return current_block, block_color
 

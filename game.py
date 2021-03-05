@@ -70,8 +70,9 @@ class Game:
         for j in self.tetro_list:
             pygame.draw.rect(self.screen, self.current_tetro_color, j)
 
-        for element in self.locked_tetro_list_rect:
-            pygame.draw.rect(self.screen, (255, 0, 0), element)
+            for element in self.locked_tetro_list_rect:
+                rect, color = element
+                pygame.draw.rect(self.screen, color, rect)
 
         pygame.display.flip()
 
@@ -98,7 +99,8 @@ class Game:
                             elements[1] * self.blocks.size,
                             self.blocks.size,
                             self.blocks.size)
-                self.locked_tetro_list_rect.append(rect)
+                this_set = (rect, color)
+                self.locked_tetro_list_rect.append(this_set)
                 self.locked_tetro_colors.append(color)
 
 
@@ -122,23 +124,9 @@ class Game:
             locked_tetro_set = (self.current_tetro, self.current_tetro_color)
             self.locked_tetro.append(locked_tetro_set)
             self.current_tetro, self.current_tetro_color = tetro.create_block()
-
-
         #print("current tetro: " + str(self.current_tetro))
         #print("locked" + str(self.locked_tetro))
         #print("locked_rect" + str(self.locked_tetro_list_rect))
-
-
-
-
-
-
-
-
-
-
-
-
 
     def update(self):
         global next_tetro
@@ -146,14 +134,13 @@ class Game:
         self.tetro_movement()
         self.create_locked_tetros()
         self.create_tetros()
+        print(self.locked_tetro_colors)
 
         #print('tetrolist ' + str(self.tetro_list))
         #print(self.current_tetro)
         #print(self.locked_positions)
         #print('gridlist ' + str(self.grid))
        #print("locked rect:   " + str(self.locked_rect))
-
-
 
     def main(self):
         clock.tick(1)

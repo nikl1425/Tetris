@@ -25,3 +25,24 @@
                     print("rect = " + str(i) + " color = " + str(color))
         except:
             print("not filled yet")
+
+
+
+                for i in range(len(shape)):
+            x, y = shape[i]
+            r, c = new_shape[i]
+            new_value = x + (x-r)
+            new_value2 = y + (y-c)
+            new_list.append([new_value, new_value2])
+
+
+              new_list = []
+        for i in range(len(shape)):
+            x, y = shape[i]
+            r, c = new_shape[i]
+            remainder_x = x - r
+            remainder_y = y - c
+            print(remainder_x)
+            print("currentXY = " + str(x) + " " + str(y))
+            print("RC = " +str(r) +" " +str(c))
+            new_list.append([remainder_x, remainder_x])

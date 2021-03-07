@@ -16,7 +16,7 @@ clock = pygame.time.Clock()
 locked_positon = []
 grid_start = gameWidth // 3
 locked_list = []
-tetro2 = Block(20)
+
 
 
 def iterate_through_locked_position(locked_pos_list):
@@ -114,8 +114,8 @@ class Game:
             for elements in rect_list:
                 rect = pygame.Rect(elements[0] * self.blocks.size + grid_start,
                                    elements[1] * self.blocks.size,
-                                   self.blocks.size,
-                                   self.blocks.size)
+                                   self.blocks.size-1,
+                                   self.blocks.size-1)
                 this_set = (rect, color)
                 self.locked_tetro_list_rect.append(this_set)
                 self.locked_tetro_colors.append(color)
@@ -136,18 +136,23 @@ class Game:
 
         locked_element = []
         locked_element.extend([rects for (rects, _) in self.locked_tetro])
-        print(self.tetro.shape)
+        #print(self.tetro.shape)
         for i in locked_element:
             for inner_element in i:
+                for rects in self.current_tetro:
+                    if rects[1] >= inner_element[1] - 1:
+                        if rects[0] == inner_element[0]:
+                            hit_bottom = True
 
-                if any(rects[1] == inner_element[1] - 1 for rects in self.current_tetro) and any(
-                        rects[0] == inner_element[0] for rects in self.current_tetro):
-                    hit_bottom = True
+
 
         if hit_bottom:
+            print("currentbeforelocked" +str(self.current_tetro))
             locked_tetro_set = (self.current_tetro, self.current_tetro_color)
             self.locked_tetro.append(locked_tetro_set)
             self.current_tetro, self.current_tetro_color = self.tetro.create_block()
+
+
 
     def update(self):
         global next_tetro
@@ -155,6 +160,8 @@ class Game:
         self.tetro_movement()
         self.create_locked_tetros()
         self.create_tetros()
+        print("current: " + str(self.current_tetro))
+        print("locked: " + str(self.locked_tetro))
 
     def main(self):
         clock.tick(1)

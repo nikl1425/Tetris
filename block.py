@@ -109,9 +109,7 @@ class Block:
         return current_block, block_color
 
     def rotate_block(self, shape):
-        print("current:  " + str(shape))
         new_shape = self.convert_shape_format(self.current_block)
-        print("new:  " + str(new_shape))
         x_values_in_shape = [x for (x,_) in (l for l in shape)]
         y_values_in_shape = [y for (_, y) in (i for i in shape)]
         x_low = self.my_min(x_values_in_shape)
@@ -123,6 +121,7 @@ class Block:
             y = y + y_low
             new_list.append([x,y])
         return new_list
+
 
     def my_min(self, sequence):
         """return the minimum element of sequence"""

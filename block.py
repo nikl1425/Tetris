@@ -91,7 +91,7 @@ class Block:
             row = list(line)
             for j, column in enumerate(row):
                 if column == '#':
-                    positions.append(list((j, i)))
+                    positions.append(list((j+3, i-4)))
                     self.pos = positions
         return positions
 
@@ -106,6 +106,7 @@ class Block:
     def create_block(self):
         block_color, self.current_block = self.next_block()
         current_block = self.convert_shape_format(self.shape)
+        print("current - start: " , current_block)
         return current_block, block_color
 
     def rotate_block(self, shape):

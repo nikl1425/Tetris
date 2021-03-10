@@ -23,6 +23,8 @@ class App:
             self.intro_state.main()
         if self.intro_state.state == "playing":
             self.game_state.main()
+        if self.game_state.state == "lost":
+            self.intro_state.main()
 
     def on_cleanup(self):
         pygame.quit()

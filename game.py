@@ -12,11 +12,13 @@ gameWidth = 400
 gameHeight = 400
 grid_width = 10
 grid_height = 20
-
+score = 0
 clock = pygame.time.Clock()
 locked_positon = []
 grid_start = gameWidth // 3
 locked_list = []
+font = pygame.font.Font('freesansbold.ttf', 32)
+text = font.render('GeeksForGeeks', True, (0,0,0), (233,0,233))
 
 
 
@@ -38,7 +40,6 @@ class tetromino(object):
 
 
 class Game:
-
     def __init__(self, screen, width, height):
         self.state = "intro"
         self.screen = screen
@@ -56,6 +57,7 @@ class Game:
         self.current_tetro, self.current_tetro_color = self.tetro.create_block()
         self.locked_tetro_list_rect = []
         self.locked_tetro_colors = []
+
 
     def event_handler(self, event):
         if event.type == pygame.KEYDOWN:
@@ -79,6 +81,12 @@ class Game:
         self.background = pygame.transform.scale(self.background, (self.width, self.height))
         self.screen.blit(self.background, (0, 0))
         pygame.draw.rect(self.screen, "black", self.game_window)
+        # pick a font you have and set its size
+        myfont = pygame.font.SysFont("Comic Sans MS", 15)
+        # apply it to text on a label
+        label = myfont.render(f"tetris score! = {score}", 1, (0,244,100))
+        # put the label object on the screen at point x=100, y=100
+        self.screen.blit(label, (350, 50))
 
         for i in self.grid:
             pygame.draw.rect(self.screen, (200, 200, 200), i, 1)
@@ -155,18 +163,24 @@ class Game:
         for i in array:
             r, c = i
             for e in r:
-                print("comp: ", e )
-                x = e[0]
-                y = e[1] + 1
-                new_e = [x, y]
-                print("new: ", [x,y])
-                if new_e not in [item for item in r] and e[1] < 19:
+                if [e[0], e[0]+4] not in [item for item in r] and e[1] < 16:
+                    e[1] += 4
+                elif [e[0], e[0]+3] not in [item for item in r] and e[1] < 17:
+                    e[1] += 3
+                elif [e[0], e[0]+2] not in [item for item in r] and e[1] < 18:
+                    e[1] += 2
+                elif [e[0], e[0]+1] not in [item for item in r] and e[1] < 19:
                     e[1] += 1
 
-
-
-
-
+    def loosing(self, array):
+        for i in array:
+            r, c = i
+            for e in r:
+                print("current: ", self.current_tetro)
+                print("state: ", self.state)
+                print(e[1])
+                if e[1] < 1:
+                    self.state = "lose"
 
     def get_points(self):
         check_list = []
@@ -189,9 +203,9 @@ class Game:
                 completed_rows = element
                 check = all(item in check_list for item in completed_rows)
 
-
         if check is True:
-            print("CHECKED" "----------------------------------------------------------------------")
+            global score
+            #print("CHECKED" "----------------------------------------------------------------------")
             locked = []
            # print("locked tetrolist :", self.locked_tetro)
             for i in range(len(self.locked_tetro)):
@@ -204,12 +218,7 @@ class Game:
             #print("locked: ", locked)
 
             self.locked_tetro = locked
-
-
-
-
-
-
+            score += 1
 
     def update(self):
         global next_tetro
@@ -218,11 +227,13 @@ class Game:
         self.create_locked_tetros()
         self.create_tetros()
         self.get_points()
+        self.loosing(self.locked_tetro)
 
     def main(self):
-        clock.tick(3)
+        clock.tick(1)
         for event in pygame.event.get():
             self.event_handler(event)
 
         self.update()
         self.render()
+        #print(score)

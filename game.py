@@ -145,8 +145,14 @@ class Game:
                     if rects[1] >= inner_element[1] - 1:
                         if rects[0] == inner_element[0]:
                             hit_bottom = True
+        if hit_bottom:
+            # print("currentbeforelocked" +str(self.current_tetro))
+            locked_tetro_set = (self.current_tetro, self.current_tetro_color)
+            self.locked_tetro.append(locked_tetro_set)
+            self.current_tetro, self.current_tetro_color = self.tetro.create_block()
 
-        for i in self.locked_tetro:
+    def check_for_valids(self, array):
+        for i in array:
             r, c = i
             for e in r:
                 print("comp: ", e )
@@ -160,11 +166,7 @@ class Game:
 
 
 
-        if hit_bottom:
-            #print("currentbeforelocked" +str(self.current_tetro))
-            locked_tetro_set = (self.current_tetro, self.current_tetro_color)
-            self.locked_tetro.append(locked_tetro_set)
-            self.current_tetro, self.current_tetro_color = self.tetro.create_block()
+
 
     def get_points(self):
         check_list = []
@@ -187,6 +189,7 @@ class Game:
                 completed_rows = element
                 check = all(item in check_list for item in completed_rows)
 
+
         if check is True:
             print("CHECKED" "----------------------------------------------------------------------")
             locked = []
@@ -197,10 +200,13 @@ class Game:
                 list3 = [item for item in rect if item not in completed_rows]
                 #print("list3 :" , list3)
                 locked.append((list3, color))
+            self.check_for_valids(locked)
             #print("locked: ", locked)
 
             self.locked_tetro = locked
-            return self.locked_tetro
+
+
+
 
 
 
